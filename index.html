@@ -25,8 +25,7 @@
   a:focus-visible, button:focus-visible{outline:2px solid var(--orange); outline-offset:3px}
 
   nav{display:flex; justify-content:space-between; align-items:center; padding:22px 0; font-family:'IBM Plex Mono',monospace; font-size:13px}
-  nav .logo{font-weight:500}
-  nav .logo span{color:var(--orange)}
+  nav .logo{font-family:'Archivo',sans-serif; font-weight:700; font-size:22px; color:var(--ink)}
   nav ul{display:flex; gap:22px; list-style:none}
   nav a{text-decoration:none; color:var(--muted)}
   nav a:hover{color:var(--orange)}
@@ -72,7 +71,7 @@
   .fact .v{font-family:'Archivo',sans-serif; font-weight:750; font-size:26px}
   .fact .k{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted)}
 
-  footer{border-top:1.5px solid var(--line); padding:36px 0 48px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+  footer{border-top:1.5px solid var(--line); padding:36px 0 48px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted)}
   footer a{color:var(--ink); text-decoration:none}
   footer a:hover{color:var(--orange)}
   @media (prefers-reduced-motion: reduce){ #flow{display:none} }
@@ -81,7 +80,7 @@
 <body>
 <div class="wrap">
   <nav>
-    <div class="logo">VINCENT<span>_</span>ONOJA</div>
+    <div class="logo">Vincent Onoja</div>
     <ul>
       <li><a href="#research">Research</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -143,14 +142,6 @@
     <div class="sec-head"><span class="num">02</span><h2>Things I've built</h2></div>
     <div class="cards">
       <div class="card">
-        <div class="tag">Live · Computer Vision</div>
-        <h3>Starcount</h3>
-        <p>A web app that counts stars in night-sky photos and scores sky darkness —
-        background subtraction, σ-thresholding, and point-source detection, deployed
-        and in use by real people. PIV techniques, pointed at the sky.</p>
-        <a href="https://starcount.onrender.com/">Try it live →</a>
-      </div>
-      <div class="card">
         <div class="tag">Data Engineering</div>
         <h3>PIV processing pipelines</h3>
         <p>Custom Python pipelines for high-volume experimental data: filtering,
@@ -165,6 +156,14 @@
         designed a Cybertruck vibration test fixture in CATIA V6, and led an
         org-wide root-cause investigation into a seat-yellowing defect.</p>
         <a href="https://www.linkedin.com/in/vincent-onoja-86176877/">LinkedIn →</a>
+      </div>
+      <div class="card">
+        <div class="tag">Live · Computer Vision</div>
+        <h3>Starcount</h3>
+        <p>A web app that counts stars in night-sky photos and scores sky darkness —
+        background subtraction, σ-thresholding, and point-source detection, deployed
+        and in use by real people. PIV techniques, pointed at the sky.</p>
+        <a href="https://starcount.onrender.com/">Try it live →</a>
       </div>
     </div>
   </section>
@@ -195,7 +194,6 @@
 
   <footer>
     <div>© 2026 Vincent Onoja</div>
-    <div>Built with Claude Code · <a href="https://starcount.onrender.com/">starcount</a></div>
   </footer>
 </div>
 
@@ -221,13 +219,12 @@
   }
   size(); addEventListener('resize',size);
   function step(t){
-    x.fillStyle='rgba(237,240,243,0.14)'; x.fillRect(0,0,W,H);
+    x.clearRect(0,0,W,H);
+    x.fillStyle='rgba(20,31,51,0.28)';
     for(const p of pts){
       const [u,v]=vel(p.x,p.y,t);
-      const nx=p.x+u*1.6, ny=p.y+v*1.6;
-      x.strokeStyle='rgba(20,31,51,0.22)'; x.lineWidth=1;
-      x.beginPath(); x.moveTo(p.x,p.y); x.lineTo(nx,ny); x.stroke();
-      p.x=nx; p.y=ny;
+      p.x+=u*1.6; p.y+=v*1.6;
+      x.beginPath(); x.arc(p.x,p.y,1.4,0,Math.PI*2); x.fill();
       if(--p.life<=0||p.x>W+4||p.y<-4||p.y>H+4) reset(p);
     }
     requestAnimationFrame(step);
